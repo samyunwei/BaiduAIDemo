@@ -20,7 +20,7 @@ void InputWidget::Slot_PushButtonCompound_Clicked() {
 
 void InputWidget::Slot_PushButtonFile_Clicked() {
     auto filenames = QFileDialog::getOpenFileName(this);
-    m_ui.lineEdit->setText(filenames);
+    m_ui.lineEdit_file->setText(filenames);
 }
 
 void InputWidget::initGUI() {

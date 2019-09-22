@@ -21,7 +21,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">
-       <widget class="QLineEdit" name="lineEdit"/>
+          <widget class="QLineEdit" name="lineEdit_file"/>
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="pushButton_file">
