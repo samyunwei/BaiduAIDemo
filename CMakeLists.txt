@@ -7,7 +7,6 @@ find_package(Qt5Widgets)
 find_package(Qt5Core)
 find_package(Qt5Network)
 find_package(Qt5NetworkAuth)
-find_package(Qt5Multimedia)
 find_package(curl)
 find_package(openssl)
 
@@ -45,7 +44,6 @@ target_link_libraries(AICourseCPP
         Qt5::Widgets
         Qt5::Network
         Qt5::NetworkAuth
-        Qt5::Multimedia
         curl
         crypto
         jsoncpp

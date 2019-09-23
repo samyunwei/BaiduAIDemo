@@ -6,8 +6,8 @@
 #include <QFileDialog>
 #include "SoundController.h"
 #include <QMessageBox>
-#include <QSound>
-
+#include <QProcess>
+#include <QApplication>
 InputWidget::InputWidget(QWidget *parent) : QWidget(parent) {
     m_ui.setupUi(this);
     initGUI();
@@ -32,16 +32,19 @@ void InputWidget::Slot_PushButtonRecognition_Clicked() {
 
 void InputWidget::Slot_PushButtonCompound_Clicked() {
     auto c_ptr = SoundController::getInstance();
+    QString output_file = QApplication::applicationDirPath() + tr("/res/output.mp3");
     if (c_ptr != nullptr) {
         auto ret = SoundController::getInstance()->CompoundSound(m_ui.plainTextEdit_compoud->toPlainText(),
-                                                                 "./res/output.mp3");
+                                                                 output_file);
         if (ret != 0) {
             QMessageBox::information(this, tr("错误"), tr("合成失败！"));
             return;
         }
         QMessageBox::information(this, tr("成功"), tr("合成成功,开始播放！"));
-        QSound player(tr("./res/output.mp3"));
-        player.play();
+        /**
+         * 根据操作系统有关，不用QSound了，不好用。
+         */
+        QProcess::execute("play " + output_file);
     }
 }
 
