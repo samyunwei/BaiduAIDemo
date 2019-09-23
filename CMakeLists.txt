@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.14)
 project(AICourseCPP)
 set(CMAKE_CXX_STANDARD 14)
-set(QT_ROOT_DIR /Users/sam/QT/5.13.0/5.13.0/clang_64)
+set(CMAKE_PREFIX_PATH /Users/sam/QT/5.13.0/5.13.0/clang_64/lib/cmake)
 set(OPENSSL_ROOT_DIR /usr/local/opt/openssl)
 find_package(Qt5Widgets)
 find_package(Qt5Core)
 find_package(Qt5Network)
 find_package(Qt5NetworkAuth)
+find_package(Qt5Multimedia)
 find_package(curl)
 find_package(openssl)
 
@@ -38,12 +39,13 @@ add_executable(AICourseCPP
         ${SRC}
         main.cpp)
 
-qt5_use_modules(AICourseCPP Core Widgets Network NetworkAuth)
+qt5_use_modules(AICourseCPP Core Widgets Network NetworkAuth Multimedia)
 
 target_link_libraries(AICourseCPP
         Qt5::Widgets
         Qt5::Network
         Qt5::NetworkAuth
+        Qt5::Multimedia
         curl
         crypto
         jsoncpp

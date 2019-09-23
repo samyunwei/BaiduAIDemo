@@ -4,6 +4,10 @@
 
 #include "InputWidget.h"
 #include <QFileDialog>
+#include "SoundController.h"
+#include <QMessageBox>
+#include <QSound>
+
 InputWidget::InputWidget(QWidget *parent) : QWidget(parent) {
     m_ui.setupUi(this);
     initGUI();
@@ -11,11 +15,34 @@ InputWidget::InputWidget(QWidget *parent) : QWidget(parent) {
 }
 
 void InputWidget::Slot_PushButtonRecognition_Clicked() {
+    auto c_ptr = SoundController::getInstance();
+    if (c_ptr != nullptr) {
+        m_ui.plainTextEdit_result->clear();
+        QString result;
+        auto ret = c_ptr->RecongnitionSound(m_ui.lineEdit_file->text(), m_ui.comboBox_format->currentText().toLower(),
+                                            result);
+        if (ret != 0) {
+            QMessageBox::information(this, "错误", result);
+            return;
+        }
+        m_ui.plainTextEdit_result->setPlainText(result);
+    }
 
 }
 
 void InputWidget::Slot_PushButtonCompound_Clicked() {
-
+    auto c_ptr = SoundController::getInstance();
+    if (c_ptr != nullptr) {
+        auto ret = SoundController::getInstance()->CompoundSound(m_ui.plainTextEdit_compoud->toPlainText(),
+                                                                 "./res/output.mp3");
+        if (ret != 0) {
+            QMessageBox::information(this, tr("错误"), tr("合成失败！"));
+            return;
+        }
+        QMessageBox::information(this, tr("成功"), tr("合成成功,开始播放！"));
+        QSound player(tr("./res/output.mp3"));
+        player.play();
+    }
 }
 
 void InputWidget::Slot_PushButtonFile_Clicked() {
